@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
+# Archives
+*.arch
+samples/
+cmake-build-*/
+
 # C extensions
 *.so
 
