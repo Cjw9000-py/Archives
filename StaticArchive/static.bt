@@ -1,0 +1,40 @@
+
+LittleEndian();
+
+struct Signature {
+    SetForeColor(cRed);
+    char magic[8];
+    SetForeColor(0x550000);
+    uint32 general_purpose;
+    SetForeColor(0xAA0000);
+    uint64 file_count;
+    uchar mode <fgcolor=0x00AA00>;
+    uchar crc <fgcolor=0x00FF00>;
+} file_sig; 
+
+
+LittleEndian();
+struct FileEntry {
+    
+    uchar name_size <bgcolor=0xFFAAAA>;
+    char name[name_size] <bgcolor=0xFFFFAA>;
+    if (file_sig.crc == 1)
+        uint32 crc32 <bgcolor=0xAAAAAA>;
+    
+    switch (file_sig.mode) {
+        case 0:
+            uint16 data_size <bgcolor=0x0000FF>;
+            break;  
+        case 1:
+            uint32 data_size <bgcolor=0x0000FF>;
+            break;
+        case 2: 
+            uint64 data_size <bgcolor=0x0000FF>; 
+            break;
+    }
+    
+    char filedata[data_size] <bgcolor=0x00FF00>;
+    
+};
+
+FileEntry entries[file_sig.file_count];
